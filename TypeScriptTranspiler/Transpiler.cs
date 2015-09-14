@@ -6,6 +6,8 @@
 public class TranspilerWrapper
 {
 
+    // msiexec /a D:\Temp\AjaxMinSetup.msi /qb TARGETDIR=D:\Temp\AjaxMinSetup\
+    // http://nickberardi.com/yahoo-yui-compressor-vs-microsoft-ajax-minifier-vs-google-closure-compiler/
     // https://visualstudiogallery.msdn.microsoft.com/b1fff87e-d68b-4266-8bba-46fad76bbf22
     // http://www.microsoft.com/en-us/download/details.aspx?id=48593
     public class TranspilerConfigurationException : System.Exception
@@ -38,6 +40,91 @@ public class TranspilerWrapper
             : base(message, innerException)
         { }
     }
+
+
+    public static string MinifyCss(string[] filez)
+    {
+        string ret = null;
+        System.Text.StringBuilder content = new System.Text.StringBuilder();
+
+        Microsoft.Ajax.Utilities.Minifier mifi = new Microsoft.Ajax.Utilities.Minifier();
+        Microsoft.Ajax.Utilities.CodeSettings cs = new Microsoft.Ajax.Utilities.CodeSettings();
+        Microsoft.Ajax.Utilities.CssSettings css = new Microsoft.Ajax.Utilities.CssSettings();
+        css.ColorNames = Microsoft.Ajax.Utilities.CssColor.Hex;
+        css.CommentMode = Microsoft.Ajax.Utilities.CssComment.None;
+        css.BlocksStartOnSameLine = Microsoft.Ajax.Utilities.BlockStart.SameLine;
+        css.CssType = Microsoft.Ajax.Utilities.CssType.FullStyleSheet;
+        css.IndentSize = 0;
+        css.MinifyExpressions = true;
+        // css.LineTerminator ="\n";
+        css.OutputMode = Microsoft.Ajax.Utilities.OutputMode.SingleLine;
+        css.TermSemicolons = false;
+
+
+        // cs.AddRenamePair("delete", "fooDelete");
+        cs.MinifyCode = true;
+        cs.OutputMode = Microsoft.Ajax.Utilities.OutputMode.SingleLine;
+        cs.CollapseToLiteral = true;
+        cs.EvalTreatment = Microsoft.Ajax.Utilities.EvalTreatment.MakeAllSafe;
+        cs.IndentSize = 0;
+        cs.InlineSafeStrings = true;
+        cs.LocalRenaming = Microsoft.Ajax.Utilities.LocalRenaming.CrunchAll;
+        cs.MacSafariQuirks = true;
+        cs.PreserveFunctionNames = true;
+        cs.RemoveFunctionExpressionNames = true;
+        cs.RemoveUnneededCode = true;
+        cs.StripDebugStatements = true;
+        cs.PreserveImportantComments = false;
+
+        foreach (string file in filez)
+        {
+            content.Append(mifi.MinifyStyleSheet(System.IO.File.ReadAllText(file, System.Text.Encoding.UTF8), css, cs));
+            content.Append(";");
+        }
+        ret = content.ToString();
+        content.Length = 0;
+        content = null;
+
+        return ret;
+    }
+
+
+    // http://danielwertheim.se/2012/11/16/customizing-the-minification-of-javascript-in-asp-net-mvc4-allowing-reserved-words/
+    public static string MinifyJavaScript(string[] filez)
+    {
+        string ret = null;
+        System.Text.StringBuilder content = new System.Text.StringBuilder();
+
+        Microsoft.Ajax.Utilities.Minifier mifi = new Microsoft.Ajax.Utilities.Minifier();
+        Microsoft.Ajax.Utilities.CodeSettings cs = new Microsoft.Ajax.Utilities.CodeSettings();
+        
+        // cs.AddRenamePair("delete", "fooDelete");
+        cs.MinifyCode = true;
+        cs.OutputMode = Microsoft.Ajax.Utilities.OutputMode.SingleLine;
+        cs.CollapseToLiteral = true;
+        cs.EvalTreatment = Microsoft.Ajax.Utilities.EvalTreatment.MakeAllSafe;
+        cs.IndentSize = 0;
+        cs.InlineSafeStrings = true;
+        cs.LocalRenaming = Microsoft.Ajax.Utilities.LocalRenaming.CrunchAll;
+        cs.MacSafariQuirks = true;
+        cs.PreserveFunctionNames = true;
+        cs.RemoveFunctionExpressionNames = true;
+        cs.RemoveUnneededCode = true;
+        cs.StripDebugStatements = true;
+        cs.PreserveImportantComments = false;
+
+        foreach (string file in filez)
+        {
+            content.Append(mifi.MinifyJavaScript(System.IO.File.ReadAllText(file, System.Text.Encoding.UTF8), cs));
+            content.Append(";");
+        }
+        ret = content.ToString();
+        content.Length = 0;
+        content = null;
+
+        return ret;
+    }
+
 
 
     private static System.Diagnostics.Process StartHiddenProcess(string filename, string arguments)
