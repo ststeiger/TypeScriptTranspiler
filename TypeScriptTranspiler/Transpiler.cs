@@ -6,7 +6,8 @@
 public class TranspilerWrapper
 {
 
-
+    // https://visualstudiogallery.msdn.microsoft.com/b1fff87e-d68b-4266-8bba-46fad76bbf22
+    // http://www.microsoft.com/en-us/download/details.aspx?id=48593
     public class TranspilerConfigurationException : System.Exception
     {
         public TranspilerConfigurationException()
