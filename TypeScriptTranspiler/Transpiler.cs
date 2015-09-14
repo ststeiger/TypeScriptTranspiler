@@ -3,8 +3,10 @@
 // tsc -out output.js filea.ts fileb.ts... <- output to single file output.js
 // tsc -out output filea.ts fileb.ts... <- output individual files to dir output
 // tsc -out output/output.js filea.ts fileb.ts... <- output to single file in another directory
+// https://blog.appdynamics.com/devops/8-steps-migrating-javascript-typescript/
 public class TranspilerWrapper
 {
+
 
     // msiexec /a D:\Temp\AjaxMinSetup.msi /qb TARGETDIR=D:\Temp\AjaxMinSetup\
     // http://nickberardi.com/yahoo-yui-compressor-vs-microsoft-ajax-minifier-vs-google-closure-compiler/
