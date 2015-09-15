@@ -4,7 +4,7 @@
 // tsc -out output filea.ts fileb.ts... <- output individual files to dir output
 // tsc -out output/output.js filea.ts fileb.ts... <- output to single file in another directory
 // https://blog.appdynamics.com/devops/8-steps-migrating-javascript-typescript/
-public class TranspilerWrapper
+public partial class TranspilerWrapper
 {
 
 
@@ -12,38 +12,6 @@ public class TranspilerWrapper
     // http://nickberardi.com/yahoo-yui-compressor-vs-microsoft-ajax-minifier-vs-google-closure-compiler/
     // https://visualstudiogallery.msdn.microsoft.com/b1fff87e-d68b-4266-8bba-46fad76bbf22
     // http://www.microsoft.com/en-us/download/details.aspx?id=48593
-    public class TranspilerConfigurationException : System.Exception
-    {
-        public TranspilerConfigurationException()
-            : base()
-        { }
-
-        public TranspilerConfigurationException(string message)
-            : base(message)
-        { }
-
-        public TranspilerConfigurationException(string message, System.Exception innerException)
-            : base(message, innerException)
-        { }
-    }
-
-
-    public class TranspilerException : System.Exception
-    {
-        public TranspilerException()
-            : base()
-        { }
-
-        public TranspilerException(string message)
-            : base(message)
-        { }
-
-        public TranspilerException(string message, System.Exception innerException)
-            : base(message, innerException)
-        { }
-    }
-
-
     public static string MinifyCss(string[] filez)
     {
         string ret = null;
